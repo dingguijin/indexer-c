@@ -70,7 +70,19 @@ void log_vlog(log_level_t level, const char *module, const char *fmt, va_list ap
 
     pthread_mutex_lock(&g_log_lock);
     fprintf(stderr, "%s.%03ldZ %s [%s] ", stamp, ts.tv_nsec / 1000000L, level_name(level), module);
+#if defined(__clang__)
+#  pragma clang diagnostic push
+#  pragma clang diagnostic ignored "-Wformat-nonliteral"
+#elif defined(__GNUC__)
+#  pragma GCC diagnostic push
+#  pragma GCC diagnostic ignored "-Wformat-nonliteral"
+#endif
     vfprintf(stderr, fmt, ap);
+#if defined(__clang__)
+#  pragma clang diagnostic pop
+#elif defined(__GNUC__)
+#  pragma GCC diagnostic pop
+#endif
     fputc('\n', stderr);
     pthread_mutex_unlock(&g_log_lock);
 }
