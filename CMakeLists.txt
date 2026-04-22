@@ -15,8 +15,8 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
 endif()
 
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(CURL REQUIRED libcurl)
-pkg_check_modules(HIREDIS REQUIRED hiredis)
+pkg_check_modules(CURL    REQUIRED IMPORTED_TARGET libcurl)
+pkg_check_modules(HIREDIS REQUIRED IMPORTED_TARGET hiredis)
 find_package(OpenSSL REQUIRED)
 
 add_executable(indexer
@@ -36,19 +36,15 @@ target_include_directories(indexer PRIVATE
     include
     third_party/yyjson
     third_party/tomlc99
-    ${CURL_INCLUDE_DIRS}
-    ${HIREDIS_INCLUDE_DIRS}
 )
 
 target_link_libraries(indexer PRIVATE
-    ${CURL_LIBRARIES}
-    ${HIREDIS_LIBRARIES}
+    PkgConfig::CURL
+    PkgConfig::HIREDIS
     OpenSSL::SSL
     OpenSSL::Crypto
     pthread
 )
-
-target_compile_options(indexer PRIVATE ${CURL_CFLAGS_OTHER} ${HIREDIS_CFLAGS_OTHER})
 
 set_target_properties(indexer PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
