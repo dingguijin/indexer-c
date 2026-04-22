@@ -93,3 +93,4 @@ void log_log(log_level_t level, const char *module, const char *fmt, ...) {
     log_vlog(level, module, fmt, ap);
     va_end(ap);
 }
+
