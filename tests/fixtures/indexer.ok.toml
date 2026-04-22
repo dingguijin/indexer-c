@@ -1,0 +1,21 @@
+[redis]
+unix_socket = "/tmp/redis.sock"
+host        = "127.0.0.1"
+port        = 6379
+
+[redis.db_map]
+eth = 0
+bsc = 1
+polygon = 2
+base = 3
+arb = 4
+
+[chains.eth]
+chain_id     = 1
+rpc_http     = "http://localhost:8545"
+head_poll_ms = 500
+
+[chains.bsc]
+chain_id     = 56
+rpc_http     = "http://localhost:8545"
+head_poll_ms = 600

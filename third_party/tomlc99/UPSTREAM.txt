@@ -1,0 +1,4 @@
+/* Upstream: https://github.com/cktan/tomlc99
+ * Version: master snapshot (retrieved 2026-04-22)
+ * Files in this directory are vendored without local modifications.
+ */
